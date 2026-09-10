@@ -1,32 +1,14 @@
-import {
-    DELAY,
-    LIMIT_DEFAULT,
-    PAGE_DEFAULT,
-} from "@/constants/lists.constants";
-import useDebounce from "@/hooks/useDebounce";
+import useChangeUrl from "@/hooks/useChangeUrl";
 import categoryServices from "@/services/caategory.service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 const useCategory = () => {
     const [selectedId, setSelectedId] = useState<string>("");
     const router = useRouter();
-    const debounce = useDebounce();
 
-    const currentLimit = router.query.limit;
-    const currentPage = router.query.page;
-    const currentSearch = router.query.search;
-
-    const setURL = () => {
-        router.replace({
-            query: {
-                limit: currentLimit || LIMIT_DEFAULT,
-                page: currentPage || PAGE_DEFAULT,
-                search: currentSearch || "",
-            },
-        });
-    };
+    const { currentLimit, currentPage, currentSearch } = useChangeUrl();
 
     const getCategories = async () => {
         let params = `limit=${currentLimit}&page=${currentPage}`;
@@ -45,67 +27,16 @@ const useCategory = () => {
         isRefetching: isRefetchingCategory,
         refetch: refetchCategory,
     } = useQuery({
-        queryKey: ["Category", currentPage, currentLimit, currentSearch],
+        queryKey: ["Categories", currentPage, currentLimit, currentSearch],
         queryFn: () => getCategories(),
         enabled: router.isReady && !!currentPage && !!currentLimit,
     });
-
-    const handleChangePage = (page: number) => {
-        router.push({
-            query: {
-                ...router.query,
-                page,
-            },
-        });
-    };
-
-    const handleChangeLimit = (e: ChangeEvent<HTMLSelectElement>) => {
-        const selectedLimit = e.target.value;
-        router.push({
-            query: {
-                ...router.query,
-                limit: selectedLimit,
-                page: PAGE_DEFAULT,
-            },
-        });
-    };
-
-    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-        debounce(() => {
-            const search = e.target.value;
-            router.push({
-                query: {
-                    ...router.query,
-                    search,
-                    page: PAGE_DEFAULT,
-                },
-            });
-        }, DELAY);
-    };
-
-    const handleClearSearch = () => {
-        router.push({
-            query: {
-                ...router.query,
-                search: "",
-                page: PAGE_DEFAULT,
-            },
-        });
-    };
 
     return {
         dataCategory,
         isLoadingCategory,
         isRefetchingCategory,
         refetchCategory,
-
-        setURL,
-        currentPage,
-        currentLimit,
-        handleChangeLimit,
-        handleChangePage,
-        handleSearch,
-        handleClearSearch,
 
         selectedId,
         setSelectedId,
