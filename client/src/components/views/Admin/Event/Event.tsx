@@ -1,17 +1,11 @@
 import DataTable from "@/components/ui/DataTable";
 import {
-    Button,
     Chip,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
     useDisclosure,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
 import { COLUMN_LIST_EVENT } from "./Event.constants";
-import { CiMenuKebab } from "react-icons/ci";
 import Image from "next/image";
 import useChangeUrl from "@/hooks/useChangeUrl";
 import useEvent from "./useEvent";
