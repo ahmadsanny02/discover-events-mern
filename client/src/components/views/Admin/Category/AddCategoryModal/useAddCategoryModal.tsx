@@ -22,6 +22,10 @@ const useAddCategoryModal = () => {
         isPendingMutateUploadFile,
         mutateDeleteFile,
         isPendingMutateDeleteFile,
+
+        handleUploadFile,
+        handleDeleteFile,
+        handleOnClose
     } = useMediaHandling();
 
     const {
@@ -42,6 +46,7 @@ const useAddCategoryModal = () => {
         files: FileList,
         onChange: (files: FileList | undefined) => void,
     ) => {
+        handleUploadFile(files)
         if (files.length !== 0) {
             onChange(files);
             mutateUploadFile({
