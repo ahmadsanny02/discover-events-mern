@@ -58,7 +58,7 @@ const useMediaHandling = () => {
     const handleUploadFile = (
         files: FileList,
         onChange: (files: FileList | undefined) => void,
-        callback: () => void,
+        callback: (fileUrl?: string) => void,
     ) => {
         if (files.length !== 0) {
             onChange(files);
@@ -70,22 +70,13 @@ const useMediaHandling = () => {
     };
 
     const handleDeleteFile = (
-        fileUrl: string,
-        onChange: (files: FileList | undefined) => void,
+        fileUrl: string | FileList | undefined,
+        callback: () => void,
     ) => {
         if (typeof fileUrl === "string") {
-            mutateDeleteFile({ fileUrl, callback: () => onChange(undefined) });
-        }
-    };
-
-    const handleOnClose = (fileUrl: string, callback: () => void) => {
-        if (typeof fileUrl === "string") {
-            mutateDeleteFile({
-                fileUrl,
-                callback
-            });
+            mutateDeleteFile({ fileUrl, callback });
         } else {
-            callback();
+            callback()
         }
     };
 
@@ -94,10 +85,9 @@ const useMediaHandling = () => {
         isPendingMutateUploadFile,
         mutateDeleteFile,
         isPendingMutateDeleteFile,
-        
+
         handleUploadFile,
         handleDeleteFile,
-        handleOnClose
     };
 };
 
