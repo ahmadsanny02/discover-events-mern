@@ -10,6 +10,7 @@ import Image from "next/image";
 import useChangeUrl from "@/hooks/useChangeUrl";
 import useEvent from "./useEvent";
 import DropdownAction from "@/components/commons/DropdownAction";
+import AddEventModal from "./AddEventModal/AddEventModal";
 
 const Event = () => {
     const { push, isReady, query } = useRouter();
@@ -90,11 +91,11 @@ const Event = () => {
                     totalPages={dataEvents?.pagination.totalPages}
                 />
             )}
-            {/* <AddEventModal
-                refetchEvent={refetchEvent}
+            <AddEventModal
                 {...addEventModal}
+                refetchEvent={refetchEvents}
             />
-            <DeleteEventModal
+            {/* <DeleteEventModal
                 refetchEvent={refetchEvent}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
