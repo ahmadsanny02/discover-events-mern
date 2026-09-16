@@ -18,38 +18,38 @@ interface PropTypes {
     isOpen: boolean;
     onClose: () => void;
     onOpenChange: () => void;
-    refetchCategory: () => void;
+    refetchEvents: () => void;
 }
 
 const AddEventModal = (props: PropTypes) => {
-    const { isOpen, onClose, onOpenChange, refetchCategory } = props;
+    const { isOpen, onClose, onOpenChange, refetchEvents } = props;
 
     const {
         control,
         errors,
 
         handleSubmitForm,
-        handleAddCategory,
-        isPendingMutateAddCategory,
-        isSuccessMutateAddCategory,
+        handleAddEvent,
+        isPendingMutateAddEvent,
+        isSuccessMutateAddEvent,
 
         preview,
-        handleUploadIcon,
+        handleUploadBanner,
         isPendingMutateUploadFile,
-        handleDeleteIcon,
+        handleDeleteBanner,
         isPendingMutateDeleteFile,
         handleOnClose,
     } = useAddEventModal();
 
     useEffect(() => {
-        if (isSuccessMutateAddCategory) {
+        if (isSuccessMutateAddEvent) {
             onClose();
-            refetchCategory();
+            refetchEvents();
         }
-    }, [isSuccessMutateAddCategory]);
+    }, [isSuccessMutateAddEvent]);
 
     const disabledSubmit =
-        isPendingMutateAddCategory ||
+        isPendingMutateAddEvent ||
         isPendingMutateUploadFile ||
         isPendingMutateDeleteFile;
 
@@ -61,9 +61,9 @@ const AddEventModal = (props: PropTypes) => {
             placement="center"
             scrollBehavior="inside"
         >
-            <form className="" onSubmit={handleSubmitForm(handleAddCategory)}>
+            <form className="" onSubmit={handleSubmitForm(handleAddEvent)}>
                 <ModalContent className="m-4">
-                    <ModalHeader>Add Category</ModalHeader>
+                    <ModalHeader>Add Event</ModalHeader>
                     <ModalBody>
                         <div className="flex flex-col gap-2">
                             <p className="text-sm font-bold">Information</p>
@@ -84,6 +84,22 @@ const AddEventModal = (props: PropTypes) => {
                                 )}
                             />
                             <Controller
+                                name="slug"
+                                control={control}
+                                render={({ field }) => (
+                                    <Input
+                                        {...field}
+                                        autoFocus
+                                        label="Slug"
+                                        variant="bordered"
+                                        type="text"
+                                        isInvalid={errors.slug !== undefined}
+                                        errorMessage={errors.slug?.message}
+                                        className="mb-2"
+                                    />
+                                )}
+                            />
+                            <Controller
                                 name="description"
                                 control={control}
                                 render={({ field }) => (
@@ -97,19 +113,19 @@ const AddEventModal = (props: PropTypes) => {
                                     />
                                 )}
                             />
-                            <p className="text-sm font-bold">Icon</p>
+                            <p className="text-sm font-bold">Cover</p>
                             <Controller
-                                name="icon"
+                                name="banner"
                                 control={control}
                                 render={({ field: { onChange, value, ...field } }) => (
                                     <InputFile
                                         {...field}
-                                        onDelete={() => handleDeleteIcon(onChange)}
-                                        onUpload={(files) => handleUploadIcon(files, onChange)}
+                                        onDelete={() => handleDeleteBanner(onChange)}
+                                        onUpload={(files) => handleUploadBanner(files, onChange)}
                                         isDeleting={isPendingMutateDeleteFile}
                                         isUploading={isPendingMutateUploadFile}
-                                        isInvalid={errors.icon !== undefined}
-                                        errorMessage={errors.icon?.message}
+                                        isInvalid={errors.banner !== undefined}
+                                        errorMessage={errors.banner?.message}
                                         isDropable
                                         preview={typeof preview === "string" ? preview : ""}
                                     />
@@ -132,10 +148,10 @@ const AddEventModal = (props: PropTypes) => {
                             onPress={onClose}
                             disabled={disabledSubmit}
                         >
-                            {isPendingMutateAddCategory ? (
+                            {isPendingMutateAddEvent ? (
                                 <Spinner size="sm" color="white" />
                             ) : (
-                                "Create Category"
+                                "Create Event"
                             )}
                         </Button>
                     </ModalFooter>

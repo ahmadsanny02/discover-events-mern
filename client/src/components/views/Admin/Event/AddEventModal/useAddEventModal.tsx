@@ -1,6 +1,7 @@
 import { ToasterContext } from "@/contexts/ToasterContext";
 import useMediaHandling from "@/hooks/useMediaHandling";
-import categoryServices from "@/services/caategory.service";
+import categoryServices from "@/services/category.service";
+import eventServices from "@/services/event.service";
 import { ICategory } from "@/types/Category";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DateValue } from "@nextui-org/react";
@@ -28,10 +29,11 @@ const useAddEventModal = () => {
     const { setToaster } = useContext(ToasterContext);
 
     const {
-        mutateUploadFile,
         isPendingMutateUploadFile,
-        mutateDeleteFile,
         isPendingMutateDeleteFile,
+
+        handleUploadFile,
+        handleDeleteFile
     } = useMediaHandling();
 
     const {
@@ -47,9 +49,32 @@ const useAddEventModal = () => {
     });
 
     const preview = watch("banner")
+    const fileUrl = getValues("banner")
+
+    const handleUploadBanner = (
+        files: FileList,
+        onChange: (files: FileList | undefined) => void,
+    ) => {
+        handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
+            if (fileUrl) {
+                setValue("banner", fileUrl)
+            }
+        },)
+    };
+
+    const handleDeleteBanner = (onChange: (files: FileList | undefined) => void) => {
+        handleDeleteFile(fileUrl, () => onChange(undefined))
+    }
+
+    const handleOnClose = (onClose: () => void) => {
+        handleDeleteFile(fileUrl, () => {
+            reset()
+            onClose()
+        })
+    }
 
     const addEvent = async (payload: ICategory) => {
-        const res = await categoryServices.addEvent(payload);
+        const res = await eventServices.addEvent(payload);
 
         return res;
     };
@@ -88,8 +113,8 @@ const useAddEventModal = () => {
 
         preview,
         handleUploadBanner,
-        isPendingMutateUploadFile,
         handleDeleteBanner,
+        isPendingMutateUploadFile,
         isPendingMutateDeleteFile,
         handleOnClose
     };
