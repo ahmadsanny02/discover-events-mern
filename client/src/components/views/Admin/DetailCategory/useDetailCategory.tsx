@@ -1,5 +1,5 @@
 import { ToasterContext } from "@/contexts/ToasterContext";
-import categoryServices from "@/services/caategory.service";
+import categoryServices from "@/services/category.service";
 import { ICategory } from "@/types/Category";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
