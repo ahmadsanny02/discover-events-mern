@@ -1,4 +1,6 @@
 import {
+    Autocomplete,
+    AutocompleteItem,
     Button,
     Input,
     Modal,
@@ -13,6 +15,7 @@ import { Controller } from "react-hook-form";
 import InputFile from "@/components/ui/InputFile";
 import { useEffect } from "react";
 import useAddEventModal from "./useAddEventModal";
+import { ICategory } from "@/types/Category";
 
 interface PropTypes {
     isOpen: boolean;
@@ -39,6 +42,8 @@ const AddEventModal = (props: PropTypes) => {
         handleDeleteBanner,
         isPendingMutateDeleteFile,
         handleOnClose,
+
+        dataCategory
     } = useAddEventModal();
 
     useEffect(() => {
@@ -89,7 +94,6 @@ const AddEventModal = (props: PropTypes) => {
                                 render={({ field }) => (
                                     <Input
                                         {...field}
-                                        autoFocus
                                         label="Slug"
                                         variant="bordered"
                                         type="text"
@@ -97,6 +101,29 @@ const AddEventModal = (props: PropTypes) => {
                                         errorMessage={errors.slug?.message}
                                         className="mb-2"
                                     />
+                                )}
+                            />
+                            <Controller
+                                name="category"
+                                control={control}
+                                render={({ field: { onChange, ...field } }) => (
+                                    <Autocomplete
+                                        {...field}
+                                        defaultItems={dataCategory?.data.data || []}
+                                        label="Category"
+                                        variant="bordered"
+                                        type="text"
+                                        isInvalid={errors.category !== undefined}
+                                        errorMessage={errors.category?.message}
+                                        className="mb-2"
+                                        onSelectionChange={(value) => onChange(value)}
+                                    >
+                                        {(category: ICategory) => (
+                                            <AutocompleteItem key={`${category._id}`}>
+                                                {category.name}
+                                            </AutocompleteItem>
+                                        )}
+                                    </Autocomplete>
                                 )}
                             />
                             <Controller

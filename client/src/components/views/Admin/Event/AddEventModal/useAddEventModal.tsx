@@ -1,11 +1,11 @@
 import { ToasterContext } from "@/contexts/ToasterContext";
 import useMediaHandling from "@/hooks/useMediaHandling";
 import categoryServices from "@/services/category.service";
-import eventServices from "@/services/event.service";
 import { ICategory } from "@/types/Category";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DateValue } from "@nextui-org/react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -27,6 +27,7 @@ const schema = yup.object().shape({
 
 const useAddEventModal = () => {
     const { setToaster } = useContext(ToasterContext);
+    const router = useRouter()
 
     const {
         isPendingMutateUploadFile,
@@ -73,8 +74,16 @@ const useAddEventModal = () => {
         })
     }
 
+    const {
+        data: dataCategory,
+    } = useQuery({
+        queryKey: ["Categories"],
+        queryFn: () => categoryServices.getCategories(),
+        enabled: true,
+    });
+
     const addEvent = async (payload: ICategory) => {
-        const res = await eventServices.addEvent(payload);
+        const res = await categoryServices.addCategory(payload);
 
         return res;
     };
@@ -116,7 +125,9 @@ const useAddEventModal = () => {
         handleDeleteBanner,
         isPendingMutateUploadFile,
         isPendingMutateDeleteFile,
-        handleOnClose
+        handleOnClose,
+
+        dataCategory
     };
 };
 
