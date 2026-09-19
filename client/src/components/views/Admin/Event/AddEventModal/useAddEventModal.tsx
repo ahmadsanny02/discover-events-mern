@@ -1,12 +1,15 @@
+import { DELAY } from "@/constants/lists.constants";
 import { ToasterContext } from "@/contexts/ToasterContext";
+import useDebounce from "@/hooks/useDebounce";
 import useMediaHandling from "@/hooks/useMediaHandling";
 import categoryServices from "@/services/category.service";
+import eventServices from "@/services/event.service";
 import { ICategory } from "@/types/Category";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DateValue } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -21,20 +24,22 @@ const schema = yup.object().shape({
     description: yup.string().required("Please input description"),
     isOnline: yup.string().required("Please select online or offline"),
     region: yup.string().required("Please select region"),
-
+    longitude: yup.string().required("Please input longitude coordinate"),
+    latitude: yup.string().required("Please input latitude coordinate"),
     banner: yup.mixed<FileList | string>().required("Please input banner"),
 });
 
 const useAddEventModal = () => {
     const { setToaster } = useContext(ToasterContext);
-    const router = useRouter()
+
+    const debounce = useDebounce();
 
     const {
         isPendingMutateUploadFile,
         isPendingMutateDeleteFile,
 
         handleUploadFile,
-        handleDeleteFile
+        handleDeleteFile,
     } = useMediaHandling();
 
     const {
@@ -49,8 +54,8 @@ const useAddEventModal = () => {
         resolver: yupResolver(schema),
     });
 
-    const preview = watch("banner")
-    const fileUrl = getValues("banner")
+    const preview = watch("banner");
+    const fileUrl = getValues("banner");
 
     const handleUploadBanner = (
         files: FileList,
@@ -58,31 +63,43 @@ const useAddEventModal = () => {
     ) => {
         handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
             if (fileUrl) {
-                setValue("banner", fileUrl)
+                setValue("banner", fileUrl);
             }
-        },)
+        });
     };
 
-    const handleDeleteBanner = (onChange: (files: FileList | undefined) => void) => {
-        handleDeleteFile(fileUrl, () => onChange(undefined))
-    }
+    const handleDeleteBanner = (
+        onChange: (files: FileList | undefined) => void,
+    ) => {
+        handleDeleteFile(fileUrl, () => onChange(undefined));
+    };
 
     const handleOnClose = (onClose: () => void) => {
         handleDeleteFile(fileUrl, () => {
-            reset()
-            onClose()
-        })
-    }
+            reset();
+            onClose();
+        });
+    };
 
-    const {
-        data: dataCategory,
-    } = useQuery({
+    const { data: dataCategory } = useQuery({
         queryKey: ["Categories"],
         queryFn: () => categoryServices.getCategories(),
         enabled: true,
     });
 
-    const addEvent = async (payload: ICategory) => {
+    const [searchRegency, setSearchRegency] = useState("");
+
+    const { data: dataRegion } = useQuery({
+        queryKey: ["region", searchRegency],
+        queryFn: () => eventServices.searchLocationByRegency(`${searchRegency}`),
+        enabled: searchRegency !== "",
+    });
+
+    const handleSearchRegion = (region: string) => {
+        debounce(() => setSearchRegency(region), DELAY);
+    };
+
+    const addCategory = async (payload: ICategory) => {
         const res = await categoryServices.addCategory(payload);
 
         return res;
@@ -93,7 +110,7 @@ const useAddEventModal = () => {
         isPending: isPendingMutateAddEvent,
         isSuccess: isSuccessMutateAddEvent,
     } = useMutation({
-        mutationFn: addEvent,
+        mutationFn: addCategory,
         onError: (error) => {
             setToaster({
                 type: "error",
@@ -127,7 +144,11 @@ const useAddEventModal = () => {
         isPendingMutateDeleteFile,
         handleOnClose,
 
-        dataCategory
+        dataCategory,
+
+        searchRegency,
+        handleSearchRegion,
+        dataRegion,
     };
 };
 
