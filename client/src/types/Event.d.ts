@@ -1,3 +1,5 @@
+import { DateValue } from "@nextui-org/react";
+
 interface IRegency {
     id: string;
     name: string;
@@ -7,19 +9,25 @@ interface IEvent {
     name: string;
     slug: string;
     category: string;
-    isFeatured: boolean;
-    isPublished: boolean;
+    isFeatured: boolean | string;
+    isOnline: boolean | string
+    isPublished: boolean | string;
     description: string;
     startDate: string;
     endDate: string;
-    location: {
+    location?: {
         region: string;
-        coordinate: {
-            x: number;
-            y: number;
-        };
+        coordinates: number[];
     };
-    banner: string;
+    banner: string | FileList;
 }
 
-export type { IRegency, IEvent };
+interface IEventForm extends IEvent {
+    region: string;
+    startDate: DateValue;
+    endDate: DateValue;
+    latitude: string;
+    longitude: string;
+}
+
+export type { IRegency, IEvent, IEventForm };
