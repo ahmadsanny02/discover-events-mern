@@ -5,7 +5,10 @@ import useMediaHandling from "@/hooks/useMediaHandling";
 import categoryServices from "@/services/category.service";
 import eventServices from "@/services/event.service";
 import { ICategory } from "@/types/Category";
+import { IEvent, IEventForm } from "@/types/Event";
+import { toDateStandard } from "@/utils/date";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { getLocalTimeZone, now } from "@internationalized/date";
 import { DateValue } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
@@ -57,6 +60,9 @@ const useAddEventModal = () => {
     const preview = watch("banner");
     const fileUrl = getValues("banner");
 
+    setValue("startDate", now(getLocalTimeZone()))
+    setValue("endDate", now(getLocalTimeZone()))
+
     const handleUploadBanner = (
         files: FileList,
         onChange: (files: FileList | undefined) => void,
@@ -99,8 +105,8 @@ const useAddEventModal = () => {
         debounce(() => setSearchRegency(region), DELAY);
     };
 
-    const addCategory = async (payload: ICategory) => {
-        const res = await categoryServices.addCategory(payload);
+    const addEvent = async (payload: IEvent) => {
+        const res = await eventServices.addEvent(payload);
 
         return res;
     };
@@ -110,7 +116,7 @@ const useAddEventModal = () => {
         isPending: isPendingMutateAddEvent,
         isSuccess: isSuccessMutateAddEvent,
     } = useMutation({
-        mutationFn: addCategory,
+        mutationFn: addEvent,
         onError: (error) => {
             setToaster({
                 type: "error",
@@ -126,7 +132,24 @@ const useAddEventModal = () => {
         },
     });
 
-    const handleAddEvent = (data: ICategory) => mutateAddEvent(data);
+    const handleAddEvent = (data: IEventForm) => {
+        const payload = {
+            ...data,
+            isFeatured: Boolean(data.isFeatured),
+            isOnline: Boolean(data.isOnline),
+            isPublished: Boolean(data.isPublished),
+            startDate: toDateStandard(data.startDate),
+            endDate: toDateStandard(data.endDate),
+            location: {
+                region: data.region,
+                coordinates: [Number(data.latitude), Number(data.longitude)]
+            },
+            banner: data.banner
+        }
+        mutateAddEvent(payload)
+    };
+
+    console.log(errors)
 
     return {
         control,

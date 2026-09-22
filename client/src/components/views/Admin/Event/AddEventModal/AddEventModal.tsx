@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import useAddEventModal from "./useAddEventModal";
 import { ICategory } from "@/types/Category";
 import { IRegency } from "@/types/Event";
+import { getLocalTimeZone, now } from "@internationalized/date";
 
 interface PropTypes {
     isOpen: boolean;
@@ -139,6 +140,7 @@ const AddEventModal = (props: PropTypes) => {
                                             label="Start Date"
                                             variant="bordered"
                                             hideTimeZone
+                                            defaultValue={now(getLocalTimeZone())}
                                             showMonthAndYearPickers
                                             isInvalid={errors.startDate !== undefined}
                                             errorMessage={errors.startDate?.message}
@@ -154,6 +156,7 @@ const AddEventModal = (props: PropTypes) => {
                                             label="End Date"
                                             variant="bordered"
                                             hideTimeZone
+                                            defaultValue={now(getLocalTimeZone())}
                                             showMonthAndYearPickers
                                             isInvalid={errors.endDate !== undefined}
                                             errorMessage={errors.endDate?.message}
@@ -198,6 +201,27 @@ const AddEventModal = (props: PropTypes) => {
                                             </SelectItem>
                                             <SelectItem key="false" value="false">
                                                 No
+                                            </SelectItem>
+                                        </Select>
+                                    )}
+                                />
+                                <Controller
+                                    name="isOnline"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            label="Online / Offline"
+                                            variant="bordered"
+                                            isInvalid={errors.isOnline !== undefined}
+                                            errorMessage={errors.isOnline?.message}
+                                            disallowEmptySelection
+                                        >
+                                            <SelectItem key="true" value="true">
+                                                Online
+                                            </SelectItem>
+                                            <SelectItem key="false" value="false">
+                                                Offline
                                             </SelectItem>
                                         </Select>
                                     )}
@@ -248,7 +272,7 @@ const AddEventModal = (props: PropTypes) => {
                                 <Controller
                                     name="longitude"
                                     control={control}
-                                    render={({ field: { onChange, ...field } }) => (
+                                    render={({ field }) => (
                                         <Input
                                             {...field}
                                             label="Longitude"
@@ -261,7 +285,7 @@ const AddEventModal = (props: PropTypes) => {
                                 <Controller
                                     name="latitude"
                                     control={control}
-                                    render={({ field: { onChange, ...field } }) => (
+                                    render={({ field }) => (
                                         <Input
                                             {...field}
                                             label="Latitude"
