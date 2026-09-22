@@ -126,7 +126,7 @@ const useAddEventModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Success add category",
+                message: "Success add event",
             });
             reset();
         },
@@ -148,8 +148,6 @@ const useAddEventModal = () => {
         }
         mutateAddEvent(payload)
     };
-
-    console.log(errors)
 
     return {
         control,
