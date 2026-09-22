@@ -45,7 +45,7 @@ const Event = () => {
                     return (
                         <Image
                             src={`${cellValue}`}
-                            alt="banner"
+                            alt="icon"
                             width={200}
                             height={100}
                             className="aspect-video w-36 rounded-lg object-cover"

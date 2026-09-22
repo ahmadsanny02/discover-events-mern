@@ -1,7 +1,7 @@
 const COLUMN_LIST_EVENT = [
     {
         name: "BANNER",
-        uid: "icon",
+        uid: "banner",
     },
     {
         name: "NAME",
