@@ -27,7 +27,7 @@ const useEvent = () => {
         isRefetching: isRefetchingEvents,
         refetch: refetchEvents,
     } = useQuery({
-        queryKey: ["Eventss", currentPage, currentLimit, currentSearch],
+        queryKey: ["Events", currentPage, currentLimit, currentSearch],
         queryFn: () => getEvents(),
         enabled: router.isReady && !!currentPage && !!currentLimit,
     });

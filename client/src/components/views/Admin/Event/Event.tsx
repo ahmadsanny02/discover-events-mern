@@ -93,7 +93,7 @@ const Event = () => {
             )}
             <AddEventModal
                 {...addEventModal}
-                refetchEvent={refetchEvents}
+                refetchEvents={refetchEvents}
             />
             {/* <DeleteEventModal
                 refetchEvent={refetchEvent}
