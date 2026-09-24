@@ -83,14 +83,14 @@ const Category = () => {
                 />
             )}
             <AddCategoryModal
-                refetchCategory={refetchCategory}
                 {...addCategoryModal}
+                refetchCategory={refetchCategory}
             />
             <DeleteCategoryModal
+                {...deleteCategoryModal}
                 refetchCategory={refetchCategory}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
-                {...deleteCategoryModal}
             />
         </section>
     );
