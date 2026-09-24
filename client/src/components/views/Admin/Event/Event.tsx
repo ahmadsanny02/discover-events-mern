@@ -11,6 +11,7 @@ import useChangeUrl from "@/hooks/useChangeUrl";
 import useEvent from "./useEvent";
 import DropdownAction from "@/components/commons/DropdownAction";
 import AddEventModal from "./AddEventModal/AddEventModal";
+import DeleteEventModal from "./DeleteEventModal";
 
 const Event = () => {
     const { push, isReady, query } = useRouter();
@@ -67,6 +68,7 @@ const Event = () => {
                             onPressButtonDetail={() => push(`/admin/event/${event._id}`)}
                             onPressButtonDelete={() => {
                                 setSelectedId(`${event._id}`);
+                                deleteEventModal.onOpen()
                             }}
                         />
                     );
@@ -95,12 +97,12 @@ const Event = () => {
                 {...addEventModal}
                 refetchEvents={refetchEvents}
             />
-            {/* <DeleteEventModal
-                refetchEvent={refetchEvent}
+            <DeleteEventModal
+                {...deleteEventModal}
+                refetchEvents={refetchEvents}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
-                {...deleteEventModal}
-            /> */}
+            />
         </section>
     );
 };
