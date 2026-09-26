@@ -18,7 +18,7 @@ const toDateStandard = (date: DateValue) => {
     const minute = "minute" in date ? date.minute : 0
     const second = "second" in date ? date.second : 0
 
-    const result = `${year}-${month}-${day} ${standardTime(hour)}:${standardTime(minute)}:${standardTime(second)}`
+    const result = `${year}-${standardTime(month)}-${standardTime(day)} ${standardTime(hour)}:${standardTime(minute)}:${standardTime(second)}`
     return result
 }
 
