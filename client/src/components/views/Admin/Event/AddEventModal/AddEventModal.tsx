@@ -139,8 +139,8 @@ const AddEventModal = (props: PropTypes) => {
                                             {...field}
                                             label="Start Date"
                                             variant="bordered"
-                                            hideTimeZone
                                             defaultValue={now(getLocalTimeZone())}
+                                            hideTimeZone
                                             showMonthAndYearPickers
                                             isInvalid={errors.startDate !== undefined}
                                             errorMessage={errors.startDate?.message}
@@ -155,8 +155,8 @@ const AddEventModal = (props: PropTypes) => {
                                             {...field}
                                             label="End Date"
                                             variant="bordered"
-                                            hideTimeZone
                                             defaultValue={now(getLocalTimeZone())}
+                                            hideTimeZone
                                             showMonthAndYearPickers
                                             isInvalid={errors.endDate !== undefined}
                                             errorMessage={errors.endDate?.message}
