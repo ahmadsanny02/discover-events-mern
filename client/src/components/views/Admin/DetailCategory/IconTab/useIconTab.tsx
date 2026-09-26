@@ -1,7 +1,7 @@
 import useMediaHandling from "@/hooks/useMediaHandling";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import * as yup from 'yup';
+import * as yup from "yup";
 
 const schemaUpdateIcon = yup.object().shape({
     icon: yup.mixed<FileList | string>().required("Please input icon."),
@@ -9,10 +9,11 @@ const schemaUpdateIcon = yup.object().shape({
 
 const useIconTab = () => {
     const {
-        mutateUploadFile,
         isPendingMutateUploadFile,
-        mutateDeleteFile,
         isPendingMutateDeleteFile,
+
+        handleUploadFile,
+        handleDeleteFile,
     } = useMediaHandling();
 
     const {
@@ -28,30 +29,25 @@ const useIconTab = () => {
     });
 
     const preview = watchUpdateIcon("icon");
+    const fileUrl = getValuesUpdateIcon("icon");
 
     const handleUploadIcon = (
         files: FileList,
         onChange: (files: FileList | undefined) => void,
     ) => {
-        if (files.length !== 0) {
-            onChange(files);
-            mutateUploadFile({
-                file: files[0],
-                callback: (fileUrl: string) => {
-                    setValueUpdateIcon("icon", fileUrl);
-                },
-            });
-        }
+        handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
+            if (fileUrl) {
+                setValueUpdateIcon("icon", fileUrl);
+            }
+        });
     };
 
     const handleDeleteIcon = (
         onChange: (files: FileList | undefined) => void,
     ) => {
-        const fileUrl = getValuesUpdateIcon("icon");
-        if (typeof fileUrl === "string") {
-            mutateDeleteFile({ fileUrl, callback: () => onChange(undefined) });
-        }
+        handleDeleteFile(fileUrl, () => onChange(undefined));
     };
+
     return {
         handleDeleteIcon,
         handleUploadIcon,
@@ -67,7 +63,7 @@ const useIconTab = () => {
         setValueUpdateIcon,
 
         preview,
-    }
-}
+    };
+};
 
-export default useIconTab
+export default useIconTab;
