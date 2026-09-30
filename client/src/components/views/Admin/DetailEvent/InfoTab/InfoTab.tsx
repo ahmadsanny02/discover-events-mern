@@ -1,4 +1,4 @@
-import { IEvent } from "@/types/Event";
+import { IEvent, IEventForm } from "@/types/Event";
 import {
     Autocomplete,
     AutocompleteItem,
@@ -8,6 +8,8 @@ import {
     CardHeader,
     DatePicker,
     Input,
+    Select,
+    SelectItem,
     Skeleton,
     Spinner,
     Textarea,
@@ -21,7 +23,7 @@ import { toInputDate } from "@/utils/date";
 
 interface PropTypes {
     dataEvent: IEvent;
-    onUpdate: (data: IEvent) => void;
+    onUpdate: (data: IEventForm) => void;
     isPendingUpdate: boolean;
     isSuccessUpdate: boolean;
 }
@@ -45,9 +47,11 @@ const InfoTab = (props: PropTypes) => {
             setValueUpdateInfo("description", `${dataEvent?.description}`);
             setValueUpdateInfo("slug", `${dataEvent?.slug}`);
             setValueUpdateInfo("category", `${dataEvent?.category}`);
-            setValueUpdateInfo("startDate", toInputDate(`${dataEvent?.startDate}`))
-            setValueUpdateInfo("endDate", toInputDate(`${dataEvent?.endDate}`))
-            // setValueUpdateInfo("slug", `${dataEvent?.slug}`)
+            setValueUpdateInfo("startDate", toInputDate(`${dataEvent?.startDate}`));
+            setValueUpdateInfo("endDate", toInputDate(`${dataEvent?.endDate}`));
+            setValueUpdateInfo("isFeatured", `${dataEvent?.isFeatured}`)
+            setValueUpdateInfo("isPublished", `${dataEvent?.isPublished}`)
+
         }
     }, [dataEvent]);
 
@@ -134,23 +138,6 @@ const InfoTab = (props: PropTypes) => {
                             )}
                         />
                     </Skeleton>
-                    <Skeleton isLoaded={!!dataEvent?.description} className="rounded-lg">
-                        <Controller
-                            name="description"
-                            control={controlUpdateInfo}
-                            render={({ field }) => (
-                                <Textarea
-                                    {...field}
-                                    label="Description"
-                                    labelPlacement="outside"
-                                    variant="bordered"
-                                    isInvalid={errorsUpdateInfo.description !== undefined}
-                                    errorMessage={errorsUpdateInfo.description?.message}
-                                    defaultValue={dataEvent?.description}
-                                />
-                            )}
-                        />
-                    </Skeleton>
                     <Skeleton isLoaded={!!dataEvent?.startDate} className="rounded-lg">
                         <Controller
                             name="startDate"
@@ -187,7 +174,75 @@ const InfoTab = (props: PropTypes) => {
                             )}
                         />
                     </Skeleton>
-
+                    <Skeleton isLoaded={!!dataEvent} className="rounded-lg">
+                        <Controller
+                            name="isPublished"
+                            control={controlUpdateInfo}
+                            render={({ field }) => (
+                                <Select
+                                    {...field}
+                                    label="Status"
+                                    variant="bordered"
+                                    isInvalid={errorsUpdateInfo.isPublished !== undefined}
+                                    errorMessage={errorsUpdateInfo.isPublished?.message}
+                                    disallowEmptySelection
+                                    defaultSelectedKeys={[
+                                        dataEvent?.isPublished ? "true" : "false"
+                                    ]}
+                                >
+                                    <SelectItem key="true" value="true">
+                                        Publish
+                                    </SelectItem>
+                                    <SelectItem key="false" value="false">
+                                        Draft
+                                    </SelectItem>
+                                </Select>
+                            )}
+                        />
+                    </Skeleton>
+                    <Skeleton isLoaded={!!dataEvent} className="rounded-lg">
+                        <Controller
+                            name="isFeatured"
+                            control={controlUpdateInfo}
+                            render={({ field }) => (
+                                <Select
+                                    {...field}
+                                    label="Featured"
+                                    variant="bordered"
+                                    isInvalid={errorsUpdateInfo.isFeatured !== undefined}
+                                    errorMessage={errorsUpdateInfo.isFeatured?.message}
+                                    disallowEmptySelection
+                                    defaultSelectedKeys={[
+                                        dataEvent?.isFeatured ? "true" : "false"
+                                    ]}
+                                >
+                                    <SelectItem key="true" value="true">
+                                        Yes
+                                    </SelectItem>
+                                    <SelectItem key="false" value="false">
+                                        No
+                                    </SelectItem>
+                                </Select>
+                            )}
+                        />
+                    </Skeleton>
+                    <Skeleton isLoaded={!!dataEvent?.description} className="rounded-lg">
+                        <Controller
+                            name="description"
+                            control={controlUpdateInfo}
+                            render={({ field }) => (
+                                <Textarea
+                                    {...field}
+                                    label="Description"
+                                    labelPlacement="outside"
+                                    variant="bordered"
+                                    isInvalid={errorsUpdateInfo.description !== undefined}
+                                    errorMessage={errorsUpdateInfo.description?.message}
+                                    defaultValue={dataEvent?.description}
+                                />
+                            )}
+                        />
+                    </Skeleton>
                     <Button
                         color="danger"
                         className="mt-2 disabled:bg-default-500"

@@ -13,11 +13,6 @@ const schemaUpdateInfo = yup.object().shape({
     isPublished: yup.string().required("Please select status"),
     isFeatured: yup.string().required("Please select featured"),
     description: yup.string().required("Please input description"),
-    isOnline: yup.string().required("Please select online or offline"),
-    region: yup.string().required("Please select region"),
-    longitude: yup.string().required("Please input longitude coordinate"),
-    latitude: yup.string().required("Please input latitude coordinate"),
-    banner: yup.mixed<FileList | string>().required("Please input banner"),
 });
 
 const useInfoTab = () => {
