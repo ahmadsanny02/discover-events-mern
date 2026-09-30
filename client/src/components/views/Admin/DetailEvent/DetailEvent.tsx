@@ -2,14 +2,19 @@ import { Tab, Tabs } from "@nextui-org/react";
 import InfoTab from "./InfoTab";
 import useDetailEvent from "./useDetailEvent";
 import CoverTab from "./CoverTab";
+import LocationTab from './LocationTab';
 
 const DetailEvent = () => {
     const {
         dataEvent,
-
         handleUpdateEvent,
+        handleUpdateInfo,
+        handleUpdateLocation,
         isPendingMutateUpdateEvent,
         isSuccessMutateUpdateEvent,
+
+        dataDefaultRegion,
+        isPendingDefaultRegion
     } = useDetailEvent();
 
     return (
@@ -25,7 +30,17 @@ const DetailEvent = () => {
             <Tab key="info" title="Info">
                 <InfoTab
                     dataEvent={dataEvent}
-                    onUpdate={handleUpdateEvent}
+                    onUpdate={handleUpdateInfo}
+                    isPendingUpdate={isPendingMutateUpdateEvent}
+                    isSuccessUpdate={isSuccessMutateUpdateEvent}
+                />
+            </Tab>
+            <Tab key="location" title="Location">
+                <LocationTab
+                    dataEvent={dataEvent}
+                    dataDefaultRegion={dataDefaultRegion?.data?.data[0]?.name}
+                    isPendingDefaultRegion={isPendingDefaultRegion}
+                    onUpdate={handleUpdateLocation}
                     isPendingUpdate={isPendingMutateUpdateEvent}
                     isSuccessUpdate={isSuccessMutateUpdateEvent}
                 />
