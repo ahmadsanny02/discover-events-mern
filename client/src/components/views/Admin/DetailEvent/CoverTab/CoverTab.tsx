@@ -11,7 +11,7 @@ import Image from "next/image";
 import { Controller } from "react-hook-form";
 import { useEffect } from "react";
 import useCoverTab from "./useCoverTab";
-import { IEvent } from "@/types/Event";
+import { IEvent, IEventForm } from "@/types/Event";
 
 interface PropTypes {
     currentCover: string;
