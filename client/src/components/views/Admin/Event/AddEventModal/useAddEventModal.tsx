@@ -4,14 +4,12 @@ import useDebounce from "@/hooks/useDebounce";
 import useMediaHandling from "@/hooks/useMediaHandling";
 import categoryServices from "@/services/category.service";
 import eventServices from "@/services/event.service";
-import { ICategory } from "@/types/Category";
 import { IEvent, IEventForm } from "@/types/Event";
 import { toDateStandard } from "@/utils/date";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getLocalTimeZone, now } from "@internationalized/date";
 import { DateValue } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -142,8 +140,8 @@ const useAddEventModal = () => {
             isFeatured: Boolean(data.isFeatured),
             isOnline: Boolean(data.isOnline),
             isPublished: Boolean(data.isPublished),
-            startDate: toDateStandard(data.startDate),
-            endDate: toDateStandard(data.endDate),
+            startDate: data.startDate ? toDateStandard(data.startDate) : "",
+            endDate: data.endDate ? toDateStandard(data.endDate) : "",
             location: {
                 region: `${data.region}`,
                 coordinates: [Number(data.latitude), Number(data.longitude)]
