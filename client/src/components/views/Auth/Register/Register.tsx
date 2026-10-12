@@ -117,7 +117,7 @@ const Register = () => {
                     <button
                       className="focus:outline-none"
                       type="button"
-                      onPress={() => handleVisiblePassword("password")}
+                      onClick={() => handleVisiblePassword("password")}
                     >
                       {visiblePassword.password ? (
                         <FaEye className="pointer-events-none text-xl text-default-400" />
@@ -145,7 +145,7 @@ const Register = () => {
                     <button
                       className="focus:outline-none"
                       type="button"
-                      onPress={() => handleVisiblePassword("confirmPassword")}
+                      onClick={() => handleVisiblePassword("confirmPassword")}
                     >
                       {visiblePassword.confirmPassword ? (
                         <FaEye className="pointer-events-none text-xl text-default-400" />
