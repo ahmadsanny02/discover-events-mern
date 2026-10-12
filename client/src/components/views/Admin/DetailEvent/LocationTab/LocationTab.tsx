@@ -107,7 +107,7 @@ const LocationTab = (props: PropTypes) => {
                                     isInvalid={errorsUpdateLocation.latitude !== undefined}
                                     errorMessage={errorsUpdateLocation.latitude?.message}
                                     className="mt-2"
-                                    defaultValue={dataEvent?.location?.coordinates[0]}
+                                    defaultValue={`${dataEvent?.location?.coordinates[0]}`}
 
                                 />
                             )}
@@ -127,7 +127,7 @@ const LocationTab = (props: PropTypes) => {
                                     isInvalid={errorsUpdateLocation.longitude !== undefined}
                                     errorMessage={errorsUpdateLocation.longitude?.message}
                                     className="mt-2"
-                                    defaultValue={dataEvent?.location?.coordinates[1]}
+                                    defaultValue={`${dataEvent?.location?.coordinates[1]}`}
                                 />
                             )}
                         />
