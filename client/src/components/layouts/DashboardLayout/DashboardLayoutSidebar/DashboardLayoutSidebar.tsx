@@ -40,7 +40,7 @@ const DashboardLayoutSidebar = (props: PropTypes) => {
             width={180}
             height={60}
             className="mb-6 w-32"
-            onPress={() => router.push("/")}
+            onClick={() => router.push("/")}
           />
         </div>
         <Listbox
