@@ -64,13 +64,23 @@ export default {
     },
 
     unauthorized(res: Response, message: string = "Unauthorized") {
-        res.status(403).json({
+        res.status(401).json({
             meta: {
-                status: 403,
+                status: 401,
                 message,
             },
             data: null,
         });
+    },
+
+    forbidden(res: Response, message: string = "Forbidden access") {
+        res.status(403).json({
+            meta: {
+                status: 403,
+                message
+            },
+            data: null
+        })
     },
 
     pagination(
