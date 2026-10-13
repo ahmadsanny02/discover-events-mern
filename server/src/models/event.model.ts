@@ -11,7 +11,7 @@ export const eventDAO = Yup.object({
     banner: Yup.string().required(),
     isFeatured: Yup.boolean().required(),
     isOnline: Yup.boolean().required(),
-    isPublish: Yup.boolean(),
+    isPublished: Yup.boolean(),
     category: Yup.string().required(),
     slug: Yup.string(),
     createdBy: Yup.string().required(),
@@ -64,7 +64,7 @@ const EventSchema = new Schema<Event>({
         type: Schema.Types.Boolean,
         required: true
     },
-    isPublish: {
+    isPublished: {
         type: Schema.Types.Boolean,
         default: true
     },
@@ -104,6 +104,8 @@ EventSchema.pre("save", function () {
         this.slug = `${slug}`
     }
 })
+
+EventSchema.index({ name: "text", description: "text" })
 
 const EventModel = mongoose.model("Event", EventSchema)
 
