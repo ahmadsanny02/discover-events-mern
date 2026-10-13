@@ -22,12 +22,19 @@ interface PropTypes {
     onUpdate: (data: IEventForm) => void;
     isPendingUpdate: boolean;
     isSuccessUpdate: boolean;
-    dataDefaultRegion: string
-    isPendingDefaultRegion: boolean
+    dataDefaultRegion: string;
+    isPendingDefaultRegion: boolean;
 }
 
 const LocationTab = (props: PropTypes) => {
-    const { dataEvent, onUpdate, isPendingUpdate, isSuccessUpdate, dataDefaultRegion, isPendingDefaultRegion } = props;
+    const {
+        dataEvent,
+        onUpdate,
+        isPendingUpdate,
+        isSuccessUpdate,
+        dataDefaultRegion,
+        isPendingDefaultRegion,
+    } = props;
 
     const {
         controlUpdateLocation,
@@ -37,15 +44,21 @@ const LocationTab = (props: PropTypes) => {
         setValueUpdateLocation,
         dataRegion,
         handleSearchRegion,
-        searchRegency
+        searchRegency,
     } = useLocationTab();
 
     useEffect(() => {
         if (dataEvent) {
             setValueUpdateLocation("isOnline", `${dataEvent?.isOnline}`);
             setValueUpdateLocation("region", `${dataEvent?.location?.region}`);
-            setValueUpdateLocation("latitude", `${dataEvent?.location?.coordinates[0]}`);
-            setValueUpdateLocation("longitude", `${dataEvent?.location?.coordinates[1]}`);
+            setValueUpdateLocation(
+                "latitude",
+                `${dataEvent?.location?.coordinates[0]}`,
+            );
+            setValueUpdateLocation(
+                "longitude",
+                `${dataEvent?.location?.coordinates[1]}`,
+            );
         }
     }, [dataEvent]);
 
@@ -93,7 +106,10 @@ const LocationTab = (props: PropTypes) => {
                             )}
                         />
                     </Skeleton>
-                    <Skeleton isLoaded={!!dataEvent?.location?.coordinates[0]} className="rounded-lg">
+                    <Skeleton
+                        isLoaded={dataEvent?.location?.coordinates[0] !== undefined}
+                        className="rounded-lg"
+                    >
                         <Controller
                             name="latitude"
                             control={controlUpdateLocation}
@@ -108,12 +124,14 @@ const LocationTab = (props: PropTypes) => {
                                     errorMessage={errorsUpdateLocation.latitude?.message}
                                     className="mt-2"
                                     defaultValue={`${dataEvent?.location?.coordinates[0]}`}
-
                                 />
                             )}
                         />
                     </Skeleton>
-                    <Skeleton isLoaded={!!dataEvent?.location?.coordinates[1]} className="rounded-lg">
+                    <Skeleton
+                        isLoaded={dataEvent?.location?.coordinates[1] !== undefined}
+                        className="rounded-lg"
+                    >
                         <Controller
                             name="longitude"
                             control={controlUpdateLocation}
@@ -133,7 +151,10 @@ const LocationTab = (props: PropTypes) => {
                         />
                     </Skeleton>
 
-                    <Skeleton isLoaded={!!dataEvent?.location?.region && !isPendingDefaultRegion} className="rounded-lg">
+                    <Skeleton
+                        isLoaded={!!dataEvent?.location?.region && !isPendingDefaultRegion}
+                        className="rounded-lg"
+                    >
                         {!isPendingDefaultRegion ? (
                             <Controller
                                 name="region"
@@ -141,11 +162,7 @@ const LocationTab = (props: PropTypes) => {
                                 render={({ field: { onChange, ...field } }) => (
                                     <Autocomplete
                                         {...field}
-                                        defaultItems={
-                                            dataRegion?.data.data && searchRegency !== ""
-                                                ? dataRegion?.data.data
-                                                : []
-                                        }
+                                        items={dataRegion?.data.data || []}
                                         label="City"
                                         defaultInputValue={dataDefaultRegion}
                                         variant="bordered"
@@ -155,6 +172,7 @@ const LocationTab = (props: PropTypes) => {
                                         errorMessage={errorsUpdateLocation.region?.message}
                                         onSelectionChange={(value) => onChange(value)}
                                         placeholder="Search city here..."
+                                        selectedKey={`${field.value || ""}`}
                                     >
                                         {(regency: IRegency) => (
                                             <AutocompleteItem key={`${regency.id}`}>
@@ -165,7 +183,7 @@ const LocationTab = (props: PropTypes) => {
                                 )}
                             />
                         ) : (
-                            <div className="w-full h-16" />
+                            <div className="h-16 w-full" />
                         )}
                     </Skeleton>
                     <Button
