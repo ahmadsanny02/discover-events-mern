@@ -129,7 +129,6 @@ const AddCategoryModal = (props: PropTypes) => {
                         <Button
                             color="danger"
                             type="submit"
-                            onPress={onClose}
                             disabled={disabledSubmit}
                         >
                             {isPendingMutateAddCategory ? (
