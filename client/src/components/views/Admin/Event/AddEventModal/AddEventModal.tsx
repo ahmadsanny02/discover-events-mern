@@ -328,7 +328,6 @@ const AddEventModal = (props: PropTypes) => {
                         <Button
                             color="danger"
                             type="submit"
-                            onPress={onClose}
                             disabled={disabledSubmit}
                         >
                             {isPendingMutateAddEvent ? (

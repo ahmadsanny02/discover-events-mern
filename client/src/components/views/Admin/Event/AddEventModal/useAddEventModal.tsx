@@ -137,9 +137,9 @@ const useAddEventModal = () => {
     const handleAddEvent = (data: IEventForm) => {
         const payload = {
             ...data,
-            isFeatured: Boolean(data.isFeatured),
-            isOnline: Boolean(data.isOnline),
-            isPublished: Boolean(data.isPublished),
+            isFeatured: data.isFeatured,
+            isOnline: data.isOnline,
+            isPublished: data.isPublished,
             startDate: data.startDate ? toDateStandard(data.startDate) : "",
             endDate: data.endDate ? toDateStandard(data.endDate) : "",
             location: {
