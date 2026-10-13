@@ -175,7 +175,7 @@ router.delete(
     }]
     */
 );
-router.get("/events/:slug/slug", eventController.findAll,
+router.get("/events/:slug/slug", eventController.findOneBySlug,
 
     /*
     #swagger.tags = ['Events']
