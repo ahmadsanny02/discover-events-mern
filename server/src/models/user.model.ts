@@ -69,7 +69,7 @@ UserSchema.pre("save", function (next) {
     next();
 });
 
-UserSchema.post("save", async function (doc, next) {
+UserSchema.post("save", async function (doc) {
     try {
         const user = doc;
 
@@ -91,9 +91,7 @@ UserSchema.post("save", async function (doc, next) {
         });
     } catch (error) {
         console.log("Error:", error);
-    } finally {
-        next();
-    }
+    } 
 });
 
 UserSchema.methods.toJSON = function () {
