@@ -72,6 +72,17 @@ const Event = () => {
                             }}
                         />
                     );
+                case "startDate":
+                case "endDate":
+                    return (
+                        <span className="text-small text-default-600 whitespace-nowrap">
+                            {cellValue ? new Date(`${cellValue}`).toLocaleDateString("id-ID", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric"
+                            }) : "-"}
+                        </span>
+                    );
                 default:
                     return cellValue as ReactNode;
             }
