@@ -60,7 +60,7 @@ export default {
         try {
             const { fullName, username, email, password, confirmPassword } =
                 req.body as unknown as TRegister;
-                
+
             await registerValidateSchema.validate({
                 fullName,
                 username,
