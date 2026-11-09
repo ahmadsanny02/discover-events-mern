@@ -128,7 +128,7 @@ router.post(
     #swagger.requestBody = {
         required: true,
         schema: {
-            $ref: "#/components/schemas/CreateEventsRequest"
+            $ref: "#/components/schemas/CreateEventRequest"
         }
     }
     */
@@ -158,7 +158,7 @@ router.put(
     #swagger.requestBody = {
         required: true,
         schema: {
-            $ref: "#/components/schemas/CreateEventsRequest"
+            $ref: "#/components/schemas/CreateEventRequest"
         }
     }
     */
