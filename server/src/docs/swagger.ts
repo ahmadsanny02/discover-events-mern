@@ -52,10 +52,12 @@ const doc = {
                 endDate: "yyyy-mm-dd hh:mm:ss",
                 location: {
                     region: "regionId",
-                    coordinates: [0, 0]
+                    coordinates: [0, 0],
+                    address: ""
                 },
                 isOnline: false,
-                isFeatured: false
+                isFeatured: false,
+                isPublished: false
             },
             RemoveMediaRequest: {
                 fileUrl: ""
