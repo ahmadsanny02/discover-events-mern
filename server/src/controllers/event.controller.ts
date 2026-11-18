@@ -66,9 +66,13 @@ export default {
 
             const result = await EventModel.findById(id);
 
-            response.success(res, result, "Success find one event");
+            if (!result) {
+                response.notFound(res, "Failed to find one an event");
+            }
+
+            response.success(res, result, "Success find one an event");
         } catch (error) {
-            response.error(res, error, "Failed to find one event");
+            response.error(res, error, "Failed to find one an event");
         }
     },
 
