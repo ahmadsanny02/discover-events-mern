@@ -2,6 +2,7 @@ import { Response } from "express";
 import { IPaginationQuery, IReqUser } from "../utils/interfaces";
 import CategoryModel, { categoryDAO } from "../models/category.model";
 import response from "../utils/response";
+import { isValidObjectId } from "mongoose";
 
 export default {
     async create(req: IReqUser, res: Response) {
@@ -64,6 +65,10 @@ export default {
             const { id } = req.params;
 
             const result = await CategoryModel.findById(id);
+
+            if (!isValidObjectId(id)) {
+                response.notFound(res, "Failed to find one a category");
+            }
 
             if (!result) {
                 response.notFound(res, "Failed to find one a category");
