@@ -66,6 +66,10 @@ export default {
 
             const result = await TicketModel.findById(id);
 
+            if (!isValidObjectId(id)) {
+                response.notFound(res, "Failed to find one a category");
+            }
+
             if (!result) {
                 response.notFound(res, "Failed to find one a ticket");
             }
