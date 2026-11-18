@@ -66,9 +66,13 @@ export default {
 
             const result = await TicketModel.findById(id);
 
-            response.success(res, result, "Successfully find one ticket");
+            if (!result) {
+                response.notFound(res, "Failed to find one a ticket");
+            }
+
+            response.success(res, result, "Successfully find one a ticket");
         } catch (error) {
-            response.error(res, error, "Failed to find ticket");
+            response.error(res, error, "Failed to find one a ticket");
         }
     },
 
