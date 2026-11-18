@@ -11,9 +11,9 @@ export default {
 
             const result = await TicketModel.create(req.body);
 
-            response.success(res, result, "Successfully created ticket");
+            response.success(res, result, "Successfully created a ticket");
         } catch (error) {
-            response.error(res, error, "Failed to create ticket");
+            response.error(res, error, "Failed to create a ticket");
         }
     },
 
@@ -53,7 +53,7 @@ export default {
                     current: page,
                     totalPages: Math.ceil(count / limit),
                 },
-                "Successfully found all tickets",
+                "Successfully find all tickets",
             );
         } catch (error) {
             response.error(res, error, "Failed to find all tickets");
@@ -66,7 +66,7 @@ export default {
 
             const result = await TicketModel.findById(id);
 
-            response.success(res, result, "Successfully found one ticket");
+            response.success(res, result, "Successfully find one ticket");
         } catch (error) {
             response.error(res, error, "Failed to find ticket");
         }
