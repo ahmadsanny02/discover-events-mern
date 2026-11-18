@@ -64,11 +64,11 @@ export default {
         try {
             const { id } = req.params;
 
-            const result = await EventModel.findById(id);
-
             if (!isValidObjectId(id)) {
                 response.notFound(res, "Failed to find one an event");
             }
+
+            const result = await EventModel.findById(id);
 
             if (!result) {
                 response.notFound(res, "Failed to find one an event");
