@@ -65,9 +65,13 @@ export default {
 
             const result = await CategoryModel.findById(id);
 
-            response.success(res, result, "Success find one category");
+            if (!result) {
+                response.notFound(res, "Failed to find one a category");
+            }
+
+            response.success(res, result, "Success find one a category");
         } catch (error) {
-            response.error(res, error, "Failed find one category");
+            response.error(res, error, "Failed find one a category");
         }
     },
     async update(req: IReqUser, res: Response) {
