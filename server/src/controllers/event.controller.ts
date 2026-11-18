@@ -84,6 +84,10 @@ export default {
         try {
             const { id } = req.params;
 
+            if (!isValidObjectId(id)) {
+                response.notFound(res, "Failed to update an event");
+            }
+
             const result = await EventModel.findByIdAndUpdate(id, req.body, {
                 new: true,
             });
@@ -97,6 +101,10 @@ export default {
     async remove(req: IReqUser, res: Response) {
         try {
             const { id } = req.params;
+
+            if (!isValidObjectId(id)) {
+                response.notFound(res, "Failed to remove an event");
+            }
 
             const result = await EventModel.findByIdAndDelete(id, { new: true });
 
