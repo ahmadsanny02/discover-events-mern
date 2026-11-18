@@ -83,24 +83,32 @@ export default {
         try {
             const { id } = req.params;
 
+            if (!isValidObjectId(id)) {
+                response.notFound(res, "Failed to update a category");
+            }
+
             const result = await CategoryModel.findByIdAndUpdate(id, req.body, {
                 new: true,
             });
 
-            response.success(res, result, "Success updated category");
+            response.success(res, result, "Success updated a category");
         } catch (error) {
-            response.error(res, error, "Failed update category");
+            response.error(res, error, "Failed update a category");
         }
     },
     async remove(req: IReqUser, res: Response) {
         try {
             const { id } = req.params;
 
+            if (!isValidObjectId(id)) {
+                response.notFound(res, "Failed to remove a category");
+            }
+
             const result = await CategoryModel.findByIdAndDelete(id, { new: true });
 
-            response.success(res, result, "Success remove category");
+            response.success(res, result, "Success remove a category");
         } catch (error) {
-            response.error(res, error, "Failed remove category");
+            response.error(res, error, "Failed remove a category");
         }
     },
 };
