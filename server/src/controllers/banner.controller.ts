@@ -63,11 +63,11 @@ export default {
         try {
             const { id } = req.params;
 
-            const result = await BannerModel.findById(id);
-
             if (!isValidObjectId(id)) {
                 response.notFound(res, "Failed to find one a banner");
             }
+
+            const result = await BannerModel.findById(id);
 
             if (!result) {
                 response.notFound(res, "Failed to find one a banner");
