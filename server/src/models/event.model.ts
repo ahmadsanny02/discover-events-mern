@@ -1,9 +1,9 @@
-import mongoose, { ObjectId } from "mongoose"
-import * as Yup from "yup"
+import mongoose, { ObjectId } from "mongoose";
+import * as Yup from "yup";
 
-export const EVENT_MODEL_NAME = "Event"
+export const EVENT_MODEL_NAME = "Event";
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 export const eventDAO = Yup.object({
     name: Yup.string().required(),
@@ -26,92 +26,92 @@ export const eventDAO = Yup.object({
             address: Yup.string(),
         })
         .required(),
+});
 
-})
-
-export type TEvent = Yup.InferType<typeof eventDAO>
+export type TEvent = Yup.InferType<typeof eventDAO>;
 
 export interface Event extends Omit<TEvent, "category" | "createdBy"> {
-    category: ObjectId
-    createdBy: ObjectId
+    category: ObjectId;
+    createdBy: ObjectId;
 }
 
-const EventSchema = new Schema<Event>({
-    name: {
-        type: Schema.Types.String,
-        required: true
-    },
-    startDate: {
-        type: Schema.Types.String,
-        required: true
-    },
-    endDate: {
-        type: Schema.Types.String,
-        required: true
-    },
-    banner: {
-        type: Schema.Types.String,
-        required: true
-    },
-    category: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "Category"
-    },
-    isFeatured: {
-        type: Schema.Types.Boolean,
-        required: true
-    },
-    isOnline: {
-        type: Schema.Types.Boolean,
-        required: true
-    },
-    isPublished: {
-        type: Schema.Types.Boolean,
-        default: true
-    },
-    description: {
-        type: Schema.Types.String,
-        required: true
-    },
-    createdBy: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "User"
-    },
-    slug: {
-        type: Schema.Types.String,
-        unique: true
-    },
-    location: {
-        type: {
-            region: {
-                type: Schema.Types.Number
-            },
-            coordinates: {
-                type: [Schema.Types.Number],
-                default: [0, 0]
-            },
-            address: {
-                type: Schema.Types.String
-            }
+const EventSchema = new Schema<Event>(
+    {
+        name: {
+            type: Schema.Types.String,
+            required: true,
         },
-        required: true
-    }
-}, {
-    timestamps: true
-})
+        startDate: {
+            type: Schema.Types.String,
+            required: true,
+        },
+        endDate: {
+            type: Schema.Types.String,
+            required: true,
+        },
+        banner: {
+            type: Schema.Types.String,
+            required: true,
+        },
+        category: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "Category",
+        },
+        isFeatured: {
+            type: Schema.Types.Boolean,
+            required: true,
+        },
+        isOnline: {
+            type: Schema.Types.Boolean,
+            required: true,
+        },
+        isPublished: {
+            type: Schema.Types.Boolean,
+            default: true,
+        },
+        description: {
+            type: Schema.Types.String,
+            required: true,
+        },
+        createdBy: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "User",
+        },
+        slug: {
+            type: Schema.Types.String,
+            unique: true,
+        },
+        location: {
+            type: {
+                region: {
+                    type: Schema.Types.Number,
+                },
+                coordinates: {
+                    type: [Schema.Types.Number],
+                    default: [0, 0],
+                },
+                address: {
+                    type: Schema.Types.String,
+                },
+            },
+            required: true,
+        },
+    },
+    {
+        timestamps: true,
+    },
+).index({ name: "text" });
 
 EventSchema.pre("save", function () {
     if (!this.slug) {
-        const slug = this.name.split(" ").join("-").toLowerCase()
+        const slug = this.name.split(" ").join("-").toLowerCase();
 
-        this.slug = `${slug}`
+        this.slug = `${slug}`;
     }
-})
+});
 
-EventSchema.index({ name: "text", description: "text" })
+const EventModel = mongoose.model(EVENT_MODEL_NAME, EventSchema);
 
-const EventModel = mongoose.model(EVENT_MODEL_NAME, EventSchema)
-
-export default EventModel
+export default EventModel;
