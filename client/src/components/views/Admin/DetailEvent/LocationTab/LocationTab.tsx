@@ -11,7 +11,6 @@ import {
     SelectItem,
     Skeleton,
     Spinner,
-    Textarea,
 } from "@nextui-org/react";
 import { Controller } from "react-hook-form";
 import { useEffect } from "react";
