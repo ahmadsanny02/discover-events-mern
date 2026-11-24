@@ -1093,15 +1093,11 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": ""
+            "example": "Technology"
           },
           "description": {
             "type": "string",
-            "example": ""
-          },
-          "icon": {
-            "type": "string",
-            "example": ""
+            "example": "Lorem ipsum dolor sit amet"
           }
         },
         "xml": {
@@ -1113,48 +1109,44 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": ""
+            "example": "DevFest Bandung 2026"
           },
           "banner": {
             "type": "string",
-            "example": "fileUrl"
+            "example": "https://www.maranatha.edu/wp-content/uploads/2023/12/General-Banner-Digital-1.png"
           },
           "category": {
             "type": "string",
-            "example": "category ObjectId"
+            "example": "6992ab95248f03936596e987"
           },
           "description": {
             "type": "string",
-            "example": ""
+            "example": "Lorem ipsum dolor sit amet"
           },
           "startDate": {
             "type": "string",
-            "example": "yyyy-mm-dd hh:mm:ss"
+            "example": "2026-10-10 10:00:00"
           },
           "endDate": {
             "type": "string",
-            "example": "yyyy-mm-dd hh:mm:ss"
+            "example": "2026-10-10 22:00:00"
           },
           "location": {
             "type": "object",
             "properties": {
               "region": {
                 "type": "string",
-                "example": "regionId"
+                "example": "3204"
               },
               "coordinates": {
                 "type": "array",
                 "example": [
-                  0,
-                  0
+                  6.6,
+                  10.1
                 ],
                 "items": {
                   "type": "number"
                 }
-              },
-              "address": {
-                "type": "string",
-                "example": ""
               }
             }
           },
@@ -1164,11 +1156,7 @@
           },
           "isFeatured": {
             "type": "boolean",
-            "example": false
-          },
-          "isPublished": {
-            "type": "boolean",
-            "example": false
+            "example": true
           }
         },
         "xml": {
@@ -1180,7 +1168,7 @@
         "properties": {
           "fileUrl": {
             "type": "string",
-            "example": ""
+            "example": "https://res.cloudinary.com/dxhd77rfp/image/upload/v1781055529/spgik1o55kvmztj2b76g.jpg"
           }
         },
         "xml": {
@@ -1192,7 +1180,7 @@
         "properties": {
           "title": {
             "type": "string",
-            "example": "Banner 1"
+            "example": "Banner - DevFest Bandung 2026"
           },
           "image": {
             "type": "string",
@@ -1210,13 +1198,13 @@
       "CreateTicketRequest": {
         "type": "object",
         "properties": {
-          "price": {
-            "type": "string",
-            "example": "2000"
-          },
           "name": {
             "type": "string",
             "example": "Ticket Reguler"
+          },
+          "price": {
+            "type": "string",
+            "example": "2000"
           },
           "events": {
             "type": "string",
