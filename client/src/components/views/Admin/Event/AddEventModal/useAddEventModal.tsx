@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { getLocalTimeZone, now } from "@internationalized/date";
 import { DateValue } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { address } from "framer-motion/client";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -20,7 +21,7 @@ const schema = yup.object().shape({
     category: yup.string().required("Please select category"),
     startDate: yup.mixed<DateValue>().required("Please select start date"),
     endDate: yup.mixed<DateValue>().required("Please select start date"),
-    isPublished: yup.string().required("Please select status"),
+    isPublish: yup.string().required("Please select status"),
     isFeatured: yup.string().required("Please select featured"),
     description: yup.string().required("Please input description"),
     isOnline: yup.string().required("Please select online or offline"),
@@ -28,6 +29,7 @@ const schema = yup.object().shape({
     longitude: yup.string().required("Please input longitude coordinate"),
     latitude: yup.string().required("Please input latitude coordinate"),
     banner: yup.mixed<FileList | string>().required("Please input banner"),
+    address: yup.string().required("Please input address")
 });
 
 const useAddEventModal = () => {
@@ -137,12 +139,10 @@ const useAddEventModal = () => {
     const handleAddEvent = (data: IEventForm) => {
         const payload = {
             ...data,
-            isFeatured: data.isFeatured,
-            isOnline: data.isOnline,
-            isPublished: data.isPublished,
             startDate: data.startDate ? toDateStandard(data.startDate) : "",
             endDate: data.endDate ? toDateStandard(data.endDate) : "",
             location: {
+                address: `${data.address}`,
                 region: `${data.region}`,
                 coordinates: [Number(data.latitude), Number(data.longitude)]
             },
