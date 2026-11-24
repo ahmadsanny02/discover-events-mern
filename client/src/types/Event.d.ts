@@ -1,4 +1,5 @@
 import { DateValue } from "@nextui-org/react";
+import { address } from "framer-motion/client";
 
 interface IRegency {
     id: string;
@@ -6,17 +7,18 @@ interface IRegency {
 }
 
 interface IEvent {
-    _id?: stirng
+    _id?: stirng;
     name?: string;
     slug?: string;
     category?: string;
     isFeatured?: boolean | string;
-    isOnline?: boolean | string
-    isPublished?: boolean | string;
+    isOnline?: boolean | string;
+    isPublish?: boolean | string;
     description?: string;
     startDate?: string;
     endDate?: string;
     location?: {
+        address: string;
         region: string;
         coordinates: number[];
     };
@@ -24,9 +26,10 @@ interface IEvent {
 }
 
 interface IEventForm extends IEvent {
-    region?: string;
     startDate?: DateValue;
     endDate?: DateValue;
+    region?: string;
+    address?: string;
     latitude?: string;
     longitude?: string;
 }
