@@ -49,7 +49,9 @@ const LocationTab = (props: PropTypes) => {
 
     useEffect(() => {
         if (dataEvent) {
+            console.log("Log:", dataDefaultRegion)
             setValueUpdateLocation("isOnline", `${dataEvent?.isOnline}`);
+            setValueUpdateLocation("address", `${dataEvent?.location?.address}`);
             setValueUpdateLocation("region", `${dataEvent?.location?.region}`);
             setValueUpdateLocation(
                 "latitude",
@@ -81,7 +83,7 @@ const LocationTab = (props: PropTypes) => {
                     className="flex flex-col gap-4"
                     onSubmit={handleSubmitUpdateLocation(onUpdate)}
                 >
-                    <Skeleton isLoaded={!!dataEvent} className="rounded-lg">
+                    <Skeleton isLoaded={!!dataEvent?.isOnline} className="rounded-lg">
                         <Controller
                             name="isOnline"
                             control={controlUpdateLocation}
@@ -107,7 +109,29 @@ const LocationTab = (props: PropTypes) => {
                         />
                     </Skeleton>
                     <Skeleton
-                        isLoaded={dataEvent?.location?.coordinates[0] !== undefined}
+                        isLoaded={!!dataEvent?.location?.address !== undefined}
+                        className="rounded-lg"
+                    >
+                        <Controller
+                            name="address"
+                            control={controlUpdateLocation}
+                            render={({ field }) => (
+                                <Input
+                                    {...field}
+                                    label="Address"
+                                    labelPlacement="outside"
+                                    variant="bordered"
+                                    type="text"
+                                    isInvalid={errorsUpdateLocation.address !== undefined}
+                                    errorMessage={errorsUpdateLocation.address?.message}
+                                    className="mt-2"
+                                    defaultValue={`${dataEvent?.location?.address}`}
+                                />
+                            )}
+                        />
+                    </Skeleton>
+                    <Skeleton
+                        isLoaded={!!dataEvent?.location?.coordinates[0] !== undefined}
                         className="rounded-lg"
                     >
                         <Controller
@@ -129,7 +153,7 @@ const LocationTab = (props: PropTypes) => {
                         />
                     </Skeleton>
                     <Skeleton
-                        isLoaded={dataEvent?.location?.coordinates[1] !== undefined}
+                        isLoaded={!!dataEvent?.location?.coordinates[1] !== undefined}
                         className="rounded-lg"
                     >
                         <Controller
@@ -162,7 +186,11 @@ const LocationTab = (props: PropTypes) => {
                                 render={({ field: { onChange, ...field } }) => (
                                     <Autocomplete
                                         {...field}
-                                        items={dataRegion?.data.data || []}
+                                        defaultItems={
+                                            dataRegion?.data.data && searchRegency !== ""
+                                                ? dataRegion?.data.data
+                                                : []
+                                        }
                                         label="City"
                                         defaultInputValue={dataDefaultRegion}
                                         variant="bordered"
@@ -172,7 +200,6 @@ const LocationTab = (props: PropTypes) => {
                                         errorMessage={errorsUpdateLocation.region?.message}
                                         onSelectionChange={(value) => onChange(value)}
                                         placeholder="Search city here..."
-                                        selectedKey={`${field.value || ""}`}
                                     >
                                         {(regency: IRegency) => (
                                             <AutocompleteItem key={`${regency.id}`}>
