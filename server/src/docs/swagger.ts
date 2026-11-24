@@ -4,44 +4,44 @@ const doc = {
     info: {
         version: "v0.0.1",
         title: "Dokumentasi API Discover Events MERN",
-        description: "Lorem ipsum dolor sit amet"
+        description: "Lorem ipsum dolor sit amet",
     },
     servers: [
         {
             url: "http://localhost:5000/api",
-            description: "Local Server"
+            description: "Local Server",
         },
         {
             url: "https://discover-events-mern-backend.vercel.app/api",
-            description: "Production Server"
-        }
+            description: "Production Server",
+        },
     ],
     components: {
         securitySchemes: {
             bearerAuth: {
                 type: "http",
-                scheme: "bearer"
-            }
+                scheme: "bearer",
+            },
         },
         schemas: {
             LoginRequest: {
                 identifier: "admin",
-                password: "Admin123"
+                password: "Admin123",
             },
             RegisterRequest: {
                 fullName: "Administrator",
                 username: "admin",
                 email: "admin@gmail.com",
                 password: "12345678",
-                confirmPassword: "12345678"
+                confirmPassword: "12345678",
             },
             ActivationRequest: {
-                code: "abcde"
+                code: "abcde",
             },
             CreateCategoryRequest: {
                 name: "",
                 description: "",
-                icon: ""
+                icon: "",
             },
             CreateEventRequest: {
                 name: "",
@@ -53,18 +53,31 @@ const doc = {
                 location: {
                     region: "regionId",
                     coordinates: [0, 0],
-                    address: ""
+                    address: "",
                 },
                 isOnline: false,
                 isFeatured: false,
-                isPublished: false
+                isPublished: false,
             },
             RemoveMediaRequest: {
-                fileUrl: ""
-            }
-        }
-    }
-}
+                fileUrl: "",
+            },
+            CreateBannerRequest: {
+                title: "Banner 1",
+                image:
+                    "https://res.cloudinary.com/dxhd77rfp/image/upload/v1794962608/ddpzxnrjm6yww2qergtw.jpg",
+                isShow: true,
+            },
+            CreateTicketRequest: {
+                price: "2000",
+                name: "Ticket Reguler",
+                events: "6acdd8aed8f87cad10a8213b",
+                description: "Lorem ipsum",
+                quantity: 100,
+            },
+        },
+    },
+};
 
 const outputFile = "./swagger_output.json";
 const endpointsFiles = ["../routes/api.ts"];
