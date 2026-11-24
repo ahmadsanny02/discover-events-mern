@@ -50,7 +50,7 @@ const InfoTab = (props: PropTypes) => {
             setValueUpdateInfo("startDate", toInputDate(`${dataEvent?.startDate}`));
             setValueUpdateInfo("endDate", toInputDate(`${dataEvent?.endDate}`));
             setValueUpdateInfo("isFeatured", `${dataEvent?.isFeatured}`)
-            setValueUpdateInfo("isPublished", `${dataEvent?.isPublished}`)
+            setValueUpdateInfo("isPublish", `${dataEvent?.isPublish}`)
 
         }
     }, [dataEvent]);
@@ -176,18 +176,18 @@ const InfoTab = (props: PropTypes) => {
                     </Skeleton>
                     <Skeleton isLoaded={!!dataEvent} className="rounded-lg">
                         <Controller
-                            name="isPublished"
+                            name="isPublish"
                             control={controlUpdateInfo}
                             render={({ field }) => (
                                 <Select
                                     {...field}
                                     label="Status"
                                     variant="bordered"
-                                    isInvalid={errorsUpdateInfo.isPublished !== undefined}
-                                    errorMessage={errorsUpdateInfo.isPublished?.message}
+                                    isInvalid={errorsUpdateInfo.isPublish !== undefined}
+                                    errorMessage={errorsUpdateInfo.isPublish?.message}
                                     disallowEmptySelection
                                     defaultSelectedKeys={[
-                                        dataEvent?.isPublished ? "true" : "false"
+                                        dataEvent?.isPublish ? "true" : "false"
                                     ]}
                                 >
                                     <SelectItem key="true" value="true">

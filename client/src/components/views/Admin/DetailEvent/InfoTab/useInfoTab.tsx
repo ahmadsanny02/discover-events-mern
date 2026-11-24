@@ -10,7 +10,7 @@ const schemaUpdateInfo = yup.object().shape({
     category: yup.string().required("Please select category"),
     startDate: yup.mixed<DateValue>().required("Please select start date"),
     endDate: yup.mixed<DateValue>().required("Please select start date"),
-    isPublished: yup.string().required("Please select status"),
+    isPublish: yup.string().required("Please select status"),
     isFeatured: yup.string().required("Please select featured"),
     description: yup.string().required("Please input description"),
 });
