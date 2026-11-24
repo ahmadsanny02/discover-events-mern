@@ -1186,6 +1186,54 @@
         "xml": {
           "name": "RemoveMediaRequest"
         }
+      },
+      "CreateBannerRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Banner 1"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/dxhd77rfp/image/upload/v1794962608/ddpzxnrjm6yww2qergtw.jpg"
+          },
+          "isShow": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "CreateBannerRequest"
+        }
+      },
+      "CreateTicketRequest": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string",
+            "example": "2000"
+          },
+          "name": {
+            "type": "string",
+            "example": "Ticket Reguler"
+          },
+          "events": {
+            "type": "string",
+            "example": "6acdd8aed8f87cad10a8213b"
+          },
+          "description": {
+            "type": "string",
+            "example": "Lorem ipsum"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 100
+          }
+        },
+        "xml": {
+          "name": "CreateTicketRequest"
+        }
       }
     }
   }
