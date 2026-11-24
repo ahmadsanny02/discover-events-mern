@@ -44,7 +44,7 @@ const useDetailEvent = () => {
             refetchEvent();
             setToaster({
                 type: "success",
-                message: "Success update event",
+                message: "Success update an event",
             });
         },
     });
@@ -54,8 +54,6 @@ const useDetailEvent = () => {
     const handleUpdateInfo = (data: IEventForm) => {
         const payload = {
             ...data,
-            isFeatured: Boolean(data.isFeatured),
-            isPublished: Boolean(data.isPublished),
             startDate: data.startDate ? toDateStandard(data.startDate) : "",
             endDate: data.endDate ? toDateStandard(data.endDate) : "",
         };
@@ -66,6 +64,7 @@ const useDetailEvent = () => {
         const payload = {
             isOnline: Boolean(data.isOnline),
             location: {
+                address: `${data.address}`,
                 region: `${data.region}`,
                 coordinates: [Number(data.latitude), Number(data.longitude)],
             },
@@ -73,11 +72,13 @@ const useDetailEvent = () => {
         mutateUpdateEvent(payload);
     };
 
-    const { data: dataDefaultRegion, isPending: isPendingDefaultRegion } = useQuery({
-        queryKey: ["defaultRegion"],
-        queryFn: () => eventServices.getRegencyById(`${dataEvent?.location?.region}`),
-        enabled: !!dataEvent?.location?.region,
-    });
+    const { data: dataDefaultRegion, isPending: isPendingDefaultRegion } =
+        useQuery({
+            queryKey: ["defaultRegion"],
+            queryFn: () =>
+                eventServices.getRegencyById(`${dataEvent?.location?.region}`),
+            enabled: !!dataEvent?.location?.region,
+        });
 
     return {
         dataEvent,
