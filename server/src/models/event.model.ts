@@ -13,7 +13,7 @@ export const eventDAO = Yup.object({
     banner: Yup.string().required(),
     isFeatured: Yup.boolean().required(),
     isOnline: Yup.boolean().required(),
-    isPublished: Yup.boolean(),
+    isPublish: Yup.boolean(),
     category: Yup.string().required(),
     slug: Yup.string(),
     createdBy: Yup.string().required(),
@@ -66,7 +66,7 @@ const EventSchema = new Schema<Event>(
             type: Schema.Types.Boolean,
             required: true,
         },
-        isPublished: {
+        isPublish: {
             type: Schema.Types.Boolean,
             default: true,
         },
