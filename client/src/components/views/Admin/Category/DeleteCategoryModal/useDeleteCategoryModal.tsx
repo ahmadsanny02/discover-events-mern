@@ -21,7 +21,7 @@ const useDeleteCategoryModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Category deleted successfully",
+                message: "Successfully deleted a category",
             });
         },
         onError: (error) => {
