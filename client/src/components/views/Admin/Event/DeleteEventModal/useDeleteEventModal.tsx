@@ -21,7 +21,7 @@ const useDeleteEventModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Event deleted successfully",
+                message: "Successfully deleted an event",
             });
         },
         onError: (error) => {
