@@ -48,7 +48,7 @@ const useDetailCategory = () => {
             refetchCategory();
             setToaster({
                 type: "success",
-                message: "Success update category",
+                message: "Successfully updated a category",
             });
         },
     });
