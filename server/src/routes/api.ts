@@ -158,7 +158,7 @@ router.delete("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ti
     }]
     */
 );
-router.get("/tickets/:eventId", ticketController.findAllByEvent,
+router.get("/tickets/:eventId/events", ticketController.findAllByEvent,
 
     /*
     #swagger.tags = ['Tickets']
