@@ -85,7 +85,7 @@ const useAddCategoryModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Success add category",
+                message: "Successfully added a category",
             });
             reset();
         },
