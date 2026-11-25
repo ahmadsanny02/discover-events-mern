@@ -130,7 +130,7 @@ const useAddEventModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Success add event",
+                message: "Successfully added an event",
             });
             reset();
         },
