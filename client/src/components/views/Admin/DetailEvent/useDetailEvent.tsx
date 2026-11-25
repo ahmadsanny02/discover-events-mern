@@ -44,7 +44,7 @@ const useDetailEvent = () => {
             refetchEvent();
             setToaster({
                 type: "success",
-                message: "Success update an event",
+                message: "Successfully updated an event",
             });
         },
     });
