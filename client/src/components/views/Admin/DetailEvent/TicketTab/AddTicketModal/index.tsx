@@ -1,3 +1,3 @@
-import AddCategoryModal from "./AddTicketModal";
+import AddTicketModal from "./AddTicketModal";
 
-export default AddCategoryModal
+export default AddTicketModal
