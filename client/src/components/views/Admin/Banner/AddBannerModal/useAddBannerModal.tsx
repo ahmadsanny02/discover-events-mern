@@ -1,6 +1,6 @@
 import { ToasterContext } from "@/contexts/ToasterContext";
 import useMediaHandling from "@/hooks/useMediaHandling";
-import BannerServices from "@/services/Banner.service";
+import bannerServices from "@/services/banner.service";
 import { IBanner } from "@/types/Banner";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
@@ -9,9 +9,9 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-    name: yup.string().required("Please input name"),
-    description: yup.string().required("Please input description"),
-    icon: yup.mixed<FileList | string>().required("Please input icon"),
+    title: yup.string().required("Please input title"),
+    isShow: yup.string().required("Please input isShow"),
+    image: yup.mixed<FileList | string>().required("Please input image"),
 });
 
 const useAddBannerModal = () => {
@@ -37,9 +37,9 @@ const useAddBannerModal = () => {
         resolver: yupResolver(schema),
     });
 
-    const preview = watch("icon")
+    const preview = watch("image")
 
-    const fileUrl = getValues("icon")
+    const fileUrl = getValues("image")
 
 
     const handleUploadIcon = (
@@ -48,7 +48,7 @@ const useAddBannerModal = () => {
     ) => {
         handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
             if (fileUrl) {
-                setValue("icon", fileUrl)
+                setValue("image", fileUrl)
             }
         },)
     };
@@ -65,7 +65,7 @@ const useAddBannerModal = () => {
     }
 
     const addBanner = async (payload: IBanner) => {
-        const res = await BannerServices.addBanner(payload);
+        const res = await bannerServices.addBanner(payload);
 
         return res;
     };
@@ -85,7 +85,7 @@ const useAddBannerModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Successfully added a Banner",
+                message: "Successfully added a banner",
             });
             reset();
         },

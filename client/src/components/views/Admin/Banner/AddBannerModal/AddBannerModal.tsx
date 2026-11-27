@@ -6,6 +6,8 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
+    Select,
+    SelectItem,
     Spinner,
     Textarea,
 } from "@nextui-org/react";
@@ -18,11 +20,11 @@ interface PropTypes {
     isOpen: boolean;
     onClose: () => void;
     onOpenChange: () => void;
-    refetchBanner: () => void;
+    refetchBanners: () => void;
 }
 
 const AddBannerModal = (props: PropTypes) => {
-    const { isOpen, onClose, onOpenChange, refetchBanner } = props;
+    const { isOpen, onClose, onOpenChange, refetchBanners } = props;
 
     const {
         control,
@@ -44,7 +46,7 @@ const AddBannerModal = (props: PropTypes) => {
     useEffect(() => {
         if (isSuccessMutateAddBanner) {
             onClose();
-            refetchBanner();
+            refetchBanners();
         }
     }, [isSuccessMutateAddBanner]);
 
@@ -68,7 +70,7 @@ const AddBannerModal = (props: PropTypes) => {
                         <div className="flex flex-col gap-2">
                             <p className="text-sm font-bold">Information</p>
                             <Controller
-                                name="name"
+                                name="title"
                                 control={control}
                                 render={({ field }) => (
                                     <Input
@@ -77,29 +79,36 @@ const AddBannerModal = (props: PropTypes) => {
                                         label="Name"
                                         variant="bordered"
                                         type="text"
-                                        isInvalid={errors.name !== undefined}
-                                        errorMessage={errors.name?.message}
+                                        isInvalid={errors.title !== undefined}
+                                        errorMessage={errors.title?.message}
                                         className="mb-2"
                                     />
                                 )}
                             />
                             <Controller
-                                name="description"
+                                name="isShow"
                                 control={control}
                                 render={({ field }) => (
-                                    <Textarea
+                                    <Select
                                         {...field}
-                                        label="Description"
+                                        label="Status"
                                         variant="bordered"
-                                        isInvalid={errors.description !== undefined}
-                                        errorMessage={errors.description?.message}
-                                        className="mb-2"
-                                    />
+                                        isInvalid={errors.isShow !== undefined}
+                                        errorMessage={errors.isShow?.message}
+                                        disallowEmptySelection
+                                    >
+                                        <SelectItem key="true" value="true">
+                                            Show
+                                        </SelectItem>
+                                        <SelectItem key="false" value="false">
+                                            Hide
+                                        </SelectItem>
+                                    </Select>
                                 )}
                             />
-                            <p className="text-sm font-bold">Icon</p>
+                            <p className="text-sm font-bold">Image</p>
                             <Controller
-                                name="icon"
+                                name="image"
                                 control={control}
                                 render={({ field: { onChange, value, ...field } }) => (
                                     <InputFile
@@ -108,8 +117,8 @@ const AddBannerModal = (props: PropTypes) => {
                                         onUpload={(files) => handleUploadIcon(files, onChange)}
                                         isDeleting={isPendingMutateDeleteFile}
                                         isUploading={isPendingMutateUploadFile}
-                                        isInvalid={errors.icon !== undefined}
-                                        errorMessage={errors.icon?.message}
+                                        isInvalid={errors.image !== undefined}
+                                        errorMessage={errors.image?.message}
                                         isDropable
                                         preview={typeof preview === "string" ? preview : ""}
                                     />
@@ -126,11 +135,7 @@ const AddBannerModal = (props: PropTypes) => {
                         >
                             Cancel
                         </Button>
-                        <Button
-                            color="danger"
-                            type="submit"
-                            disabled={disabledSubmit}
-                        >
+                        <Button color="danger" type="submit" disabled={disabledSubmit}>
                             {isPendingMutateAddBanner ? (
                                 <Spinner size="sm" color="white" />
                             ) : (

@@ -1,3 +1,3 @@
 import AddBannerModal from "./AddBannerModal";
 
-export default AddBannerModal
+export default AddBannerModal;
