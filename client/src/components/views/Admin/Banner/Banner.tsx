@@ -46,7 +46,7 @@ const Banner = () => {
                             alt="image"
                             width={300}
                             height={200}
-                            className="h-32 w-52 object-cover"
+                            className="rounded-lg h-32"
                         />
                     );
                 case "isShow":
@@ -90,10 +90,10 @@ const Banner = () => {
                     totalPages={dataBanners?.pagination.totalPages}
                 />
             )}
-            <AddBannerModal {...addBannerModal} refetchBanner={refetchBanners} />
+            <AddBannerModal {...addBannerModal} refetchBanners={refetchBanners} />
             <DeleteBannerModal
                 {...deleteBannerModal}
-                refetchBanner={refetchBanners}
+                refetchBanners={refetchBanners}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
             />

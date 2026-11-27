@@ -1,19 +1,19 @@
 const COLUMN_LIST_BANNER = [
     {
         name: "IMAGE",
-        uid: "image"
+        uid: "image",
     },
     {
         name: "TITLE",
-        uid: "title"
+        uid: "title",
     },
     {
         name: "SHOW",
-        uid: "isShow"
+        uid: "isShow",
     },
     {
         name: "ACTIONS",
-        uid: "actions"
-    }
-]
-export { COLUMN_LIST_BANNER }
+        uid: "actions",
+    },
+];
+export { COLUMN_LIST_BANNER };
