@@ -432,7 +432,7 @@
         ]
       }
     },
-    "/tickets/{eventId}": {
+    "/tickets/{eventId}/events": {
       "get": {
         "tags": [
           "Tickets"
@@ -455,7 +455,7 @@
         }
       }
     },
-    "/category": {
+    "/categories": {
       "post": {
         "tags": [
           "Category"
@@ -522,7 +522,7 @@
         }
       }
     },
-    "/category/{id}": {
+    "/categories/{id}": {
       "get": {
         "tags": [
           "Category"
@@ -1156,7 +1156,11 @@
           },
           "isFeatured": {
             "type": "boolean",
-            "example": true
+            "example": false
+          },
+          "isPublish": {
+            "type": "boolean",
+            "example": false
           }
         },
         "xml": {

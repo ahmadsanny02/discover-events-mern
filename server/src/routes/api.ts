@@ -167,7 +167,7 @@ router.get("/tickets/:eventId/events", ticketController.findAllByEvent,
 
 // Category
 router.post(
-    "/category",
+    "/categories",
     [authMiddleware, aclMiddleware([ROLES.ADMIN])],
     categoryController.create,
 
@@ -184,20 +184,20 @@ router.post(
     }
     */
 );
-router.get("/category", categoryController.findAll,
+router.get("/categories", categoryController.findAll,
 
     /*
     #swagger.tags = ['Category']
     */
 );
-router.get("/category/:id", categoryController.findOne,
+router.get("/categories/:id", categoryController.findOne,
 
     /*
     #swagger.tags = ['Category']
     */
 );
 router.put(
-    "/category/:id",
+    "/categories/:id",
     [authMiddleware, aclMiddleware([ROLES.ADMIN])],
     categoryController.update,
 
@@ -215,7 +215,7 @@ router.put(
     */
 );
 router.delete(
-    "/category/:id",
+    "/categories/:id",
     [authMiddleware, aclMiddleware([ROLES.ADMIN])],
     categoryController.remove,
 
