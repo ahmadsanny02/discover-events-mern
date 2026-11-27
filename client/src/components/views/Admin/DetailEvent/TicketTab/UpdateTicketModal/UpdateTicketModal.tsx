@@ -159,7 +159,7 @@ const UpdateTicketModal = (props: PropTypes) => {
                             {isPendingMutateUpdateTicket ? (
                                 <Spinner size="sm" color="white" />
                             ) : (
-                                "Create Ticket"
+                                "Update Ticket"
                             )}
                         </Button>
                     </ModalFooter>
