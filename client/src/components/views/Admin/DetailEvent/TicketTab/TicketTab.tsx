@@ -14,6 +14,7 @@ import useTicketTab from "./useTicketTab";
 import DeleteTicketModal from "./DeleteTicketModal";
 import AddTicketModal from "./AddTicketModal";
 import { ITicket } from "@/types/Ticket";
+import UpdateTicketModal from "./UpdateTicketModal/UpdateTicketModal";
 
 const TicketTab = () => {
     const { dataTicket, refetchTicket, isPendingTicket, isRefetchingTicket } =
@@ -23,7 +24,9 @@ const TicketTab = () => {
     const deleteTicketModal = useDisclosure();
     const updateTicketModal = useDisclosure();
 
-    const [selectedDataTicket, setSelectedDataTicket] = useState<ITicket | null>(null)
+    const [selectedDataTicket, setSelectedDataTicket] = useState<ITicket | null>(
+        null,
+    );
 
     const renderCell = useCallback(
         (ticket: Record<string, unknown>, columnKey: Key) => {
@@ -36,11 +39,12 @@ const TicketTab = () => {
                     return (
                         <DropdownAction
                             onPressButtonDetail={() => {
+                                setSelectedDataTicket(ticket as ITicket);
                                 updateTicketModal.onOpen();
                             }}
                             onPressButtonDelete={() => {
                                 deleteTicketModal.onOpen();
-                                setSelectedDataTicket(ticket as ITicket)
+                                setSelectedDataTicket(ticket as ITicket);
                             }}
                         />
                     );
@@ -61,7 +65,9 @@ const TicketTab = () => {
                             Manage ticket of this event.
                         </p>
                     </div>
-                    <Button color="danger" onPress={addTicketModal.onOpen}>Add New Ticket</Button>
+                    <Button color="danger" onPress={addTicketModal.onOpen}>
+                        Add New Ticket
+                    </Button>
                 </CardHeader>
                 <CardBody className="pt-0">
                     <DataTable
@@ -81,7 +87,14 @@ const TicketTab = () => {
                 {...deleteTicketModal}
                 selectedDataTicket={selectedDataTicket}
                 setSelectedDataTicket={setSelectedDataTicket}
-                refetchTicket={refetchTicket} />
+                refetchTicket={refetchTicket}
+            />
+            <UpdateTicketModal
+                {...updateTicketModal}
+                selectedDataTicket={selectedDataTicket}
+                setSelectedDataTicket={setSelectedDataTicket}
+                refetchTicket={refetchTicket}
+            />
         </Fragment>
     );
 };
