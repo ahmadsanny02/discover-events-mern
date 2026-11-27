@@ -14,7 +14,7 @@ interface PropTypes {
     isOpen: boolean;
     onClose: () => void;
     onOpenChange: () => void;
-    refetchBanner: () => void;
+    refetchBanners: () => void;
     selectedId: string;
     setSelectedId: Dispatch<SetStateAction<string>>;
 }
@@ -26,7 +26,7 @@ const DeleteBannerModal = (props: PropTypes) => {
         onOpenChange,
         selectedId,
         setSelectedId,
-        refetchBanner,
+        refetchBanners,
     } = props;
 
     const {
@@ -38,8 +38,8 @@ const DeleteBannerModal = (props: PropTypes) => {
     useEffect(() => {
         if (isSuccessMutateDeleteBanner) {
             onClose();
-            refetchBanner();
-            setSelectedId("")
+            refetchBanners();
+            setSelectedId("");
         }
     }, [isSuccessMutateDeleteBanner]);
 
@@ -54,7 +54,7 @@ const DeleteBannerModal = (props: PropTypes) => {
                 <ModalHeader>Delete Banner</ModalHeader>
                 <ModalBody>
                     <p className="text-medium">
-                        Are you sure you want to delete this Banner?
+                        Are you sure you want to delete this banner?
                     </p>
                 </ModalBody>
                 <ModalFooter>

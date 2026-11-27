@@ -1,5 +1,5 @@
 import { ToasterContext } from "@/contexts/ToasterContext";
-import BannerServices from "@/services/Banner.service";
+import bannerServices from "@/services/banner.service";
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
 
@@ -7,7 +7,7 @@ const useDeleteBannerModal = () => {
     const { setToaster } = useContext(ToasterContext);
 
     const deleteBanner = async (id: string) => {
-        const res = await BannerServices.deleteBanner(id);
+        const res = await bannerServices.deleteBanner(id);
 
         return res;
     };
@@ -21,7 +21,7 @@ const useDeleteBannerModal = () => {
         onSuccess: () => {
             setToaster({
                 type: "success",
-                message: "Successfully deleted a Banner",
+                message: "Successfully deleted a banner",
             });
         },
         onError: (error) => {
