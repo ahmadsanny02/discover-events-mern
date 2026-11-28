@@ -55,7 +55,7 @@ const InfoTab = (props: PropTypes) => {
                     className="flex flex-col gap-4"
                     onSubmit={handleSubmitUpdateInfo(onUpdate)}
                 >
-                    <Skeleton isLoaded={!!dataCategory?.name} className="rounded-lg">
+                    <Skeleton isLoaded={dataCategory?.name !== undefined} className="rounded-lg">
                         <Controller
                             name="name"
                             control={controlUpdateInfo}
@@ -74,7 +74,7 @@ const InfoTab = (props: PropTypes) => {
                             )}
                         />
                     </Skeleton>
-                    <Skeleton isLoaded={!!dataCategory?.name} className="rounded-lg">
+                    <Skeleton isLoaded={dataCategory?.description !== undefined} className="rounded-lg">
                         <Controller
                             name="description"
                             control={controlUpdateInfo}
