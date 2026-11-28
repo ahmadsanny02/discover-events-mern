@@ -82,7 +82,7 @@ const LocationTab = (props: PropTypes) => {
                     className="flex flex-col gap-4"
                     onSubmit={handleSubmitUpdateLocation(onUpdate)}
                 >
-                    <Skeleton isLoaded={!!dataEvent?.isOnline} className="rounded-lg">
+                    <Skeleton isLoaded={dataEvent?.isOnline !== undefined} className="rounded-lg">
                         <Controller
                             name="isOnline"
                             control={controlUpdateLocation}
@@ -108,7 +108,7 @@ const LocationTab = (props: PropTypes) => {
                         />
                     </Skeleton>
                     <Skeleton
-                        isLoaded={!!dataEvent?.location?.address !== undefined}
+                        isLoaded={dataEvent?.location?.address !== undefined}
                         className="rounded-lg"
                     >
                         <Controller
@@ -130,7 +130,7 @@ const LocationTab = (props: PropTypes) => {
                         />
                     </Skeleton>
                     <Skeleton
-                        isLoaded={!!dataEvent?.location?.coordinates[0] !== undefined}
+                        isLoaded={dataEvent?.location?.coordinates?.[0] !== undefined}
                         className="rounded-lg"
                     >
                         <Controller
@@ -152,7 +152,7 @@ const LocationTab = (props: PropTypes) => {
                         />
                     </Skeleton>
                     <Skeleton
-                        isLoaded={!!dataEvent?.location?.coordinates[1] !== undefined}
+                        isLoaded={dataEvent?.location?.coordinates?.[1] !== undefined}
                         className="rounded-lg"
                     >
                         <Controller
