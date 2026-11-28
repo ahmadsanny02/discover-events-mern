@@ -56,7 +56,7 @@ const Banner = () => {
                             size="sm"
                             variant="flat"
                         >
-                            {cellValue === true ? "Publish" : "Not Publish"}
+                            {cellValue === true ? "Show" : "Hidden"}
                         </Chip>
                     );
                 case "actions":
